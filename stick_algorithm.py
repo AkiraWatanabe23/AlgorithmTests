@@ -2,12 +2,15 @@
 import random
 import numpy as np
 
+#壁、床の定数
 FLOOR = 0
 WALL = 1
 
-MAZE_WIDTH = 11
+#迷路のサイズ
 MAZE_HEIGHT = 9
+MAZE_WIDTH = 11
 
+#探索を進める方向
 X_DIR = [0, 1, 0, -1]
 Y_DIR = [-1, 0, 1, 0]
 
@@ -35,6 +38,7 @@ def make_maze():
             if x_pos > 2:
                 index = random.randint(0, 2)
 
+            #取得したランダム方向に壁を立てる
             maze[y_pos + Y_DIR[index]][x_pos + X_DIR[index]] = 1
 
 def view_maze():
