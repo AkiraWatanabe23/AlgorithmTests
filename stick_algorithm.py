@@ -44,7 +44,7 @@ def view_maze():
             pos = maze[y_pos][x_pos]
 
             if pos == 0:
-                print('　', end='')
+                print('  ', end='')
             elif pos == 1:
                 print('🔳', end='')
 
