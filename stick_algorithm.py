@@ -16,30 +16,33 @@ Y_DIR = [-1, 0, 1, 0]
 
 #numpy.zeros(a, b) ... 縦a, 横b の二次元配列（要素は全て0）をつくる
 maze = np.zeros((MAZE_HEIGHT, MAZE_WIDTH), dtype=int)
+#↓下記でも同じものがつくれる
+#maze = [[0] * MAZE_WIDTH for _ in range(MAZE_HEIGHT)]
 
 def make_maze():
     '''迷路生成'''
-    #周りの壁をつくる
-    maze[0, :] = 1
-    maze[:, 0] = 1
-    maze[:, MAZE_WIDTH - 1] = 1
-    maze[MAZE_HEIGHT - 1, :] = 1
+    #周りの壁をつくる(以下のスライスの記述は、通常のListには使えない)
+    maze[0, :] = WALL
+    maze[:, 0] = WALL
+    maze[:, MAZE_WIDTH - 1] = WALL
+    maze[MAZE_HEIGHT - 1, :] = WALL
 
     #柱を立てる
     for y_pos in range(2, MAZE_HEIGHT - 2, 2):
         for x_pos in range(2, MAZE_WIDTH - 2, 2):
-            maze[y_pos, x_pos] = 1
+            maze[y_pos, x_pos] = WALL
 
     #壁をつくる
     for y_pos in range(2, MAZE_HEIGHT - 2, 2):
         for x_pos in range(2, MAZE_WIDTH - 2, 2):
+            #random.randint(a, b) ... a <= n <= b のランダムな整数
             index = random.randint(0, 3)
 
             if x_pos > 2:
                 index = random.randint(0, 2)
 
             #取得したランダム方向に壁を立てる
-            maze[y_pos + Y_DIR[index]][x_pos + X_DIR[index]] = 1
+            maze[y_pos + Y_DIR[index]][x_pos + X_DIR[index]] = WALL
 
 def view_maze():
     '''迷路描画'''
@@ -47,9 +50,9 @@ def view_maze():
         for x_pos in range(MAZE_WIDTH):
             pos = maze[y_pos][x_pos]
 
-            if pos == 0:
+            if pos == FLOOR:
                 print('  ', end='')
-            elif pos == 1:
+            elif pos == WALL:
                 print('🔳', end='')
 
         print()
